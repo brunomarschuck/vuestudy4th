@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>노래방가능?</title>
+
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <style>
+      body {
+        background: #eee;
+        max-width: 1000px;
+        margin: 20px auto;
+        text-align: center;
+      }
+      p,
+      h3,
+      ul {
+        margin: 0;
+        padding: 0;
+      }
+      li {
+        list-style-type: none;
+        background: #fff;
+        margin: 20px auto;
+        padding: 10px 20px;
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+      li.fav {
+        background: #ff9ed2;
+        color: white;
+      }
+
+      .w-btn-neon2 {
+        position: relative;
+        border: none;
+        min-width: 200px;
+        min-height: 50px;
+        background: linear-gradient(
+          90deg,
+          rgba(129, 230, 217, 1) 0%,
+          rgba(79, 209, 197, 1) 100%
+        );
+        border-radius: 1000px;
+        color: darkslategray;
+        cursor: pointer;
+        box-shadow: 12px 12px 24px rgba(79, 209, 197, 0.64);
+        font-weight: 700;
+        transition: 0.3s;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="app">
+      <div v-show="showSongs">
+        <h1>좋아하는 노래를 클릭하세요.</h1>
+        <ul>
+          <li
+            v-for="song in songs"
+            :class="{ fav: song.isFav }"
+            @click="toggleFav(song)"
+          >
+            <img :src="song.img" :alt="song.title" />
+            <h3>{{ song.title }}</h3>
+            <p>{{ song.singer }}</p>
+          </li>
+        </ul>
+      </div>
+
+      <button @click="toggleShowSongs">
+        <span v-if="showSongs">노래 숨기기</span>
+        <span v-else>노래 보이기</span></button
+      ><br />
+      <div style="font-size: 20px" v-show="showSongs">(Vibe 기준 1-5위)</div>
+      <br />
+
+      <button class="w-btn-neon2" style="font-size: 25px" @click="askAnswer">
+        코로나야, 오늘은 노래방에 가도 괜찮을까?
+      </button>
+      <div v-show="기다리는중">
+        <a>기다리는중(2초)</a>
+      </div>
+      <div v-show="!기다리는중">
+        <h1>{{ answer }}</h1>
+        <div>
+          <img :src="image" :alt="answer" width="300" />
+        </div>
+      </div>
+    </div>
+    <script src="app.js"></script>
+  </body>
+</html>
